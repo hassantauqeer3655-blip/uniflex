@@ -1,0 +1,30 @@
+{
+  "short_name": "UNIFLEX",
+  "name": "UNIFLEX: The Synthetic Age",
+  "icons": [
+    {
+      "src": "https://api.dicebear.com/7.x/bottts-neutral/svg?seed=Uniflex&backgroundColor=9945FF",
+      "type": "image/svg+xml",
+      "sizes": "192x192",
+      "purpose": "any"
+    },
+    {
+      "src": "https://api.dicebear.com/7.x/bottts-neutral/svg?seed=Uniflex&backgroundColor=9945FF",
+      "type": "image/svg+xml",
+      "sizes": "512x512",
+      "purpose": "any"
+    },
+    {
+      "src": "https://api.dicebear.com/7.x/bottts-neutral/svg?seed=Uniflex&backgroundColor=9945FF",
+      "type": "image/svg+xml",
+      "sizes": "512x512",
+      "purpose": "maskable"
+    }
+  ],
+  "start_url": "/",
+  "background_color": "#050505",
+  "display": "standalone",
+  "scope": "/",
+  "theme_color": "#9945FF",
+  "description": "Stream the evolution of digital consciousness on UNIFLEX."
+}

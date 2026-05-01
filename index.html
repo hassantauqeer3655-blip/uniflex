@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>UNIFLEX: The Synthetic Age</title>
+    <link rel="manifest" href="/manifest.json" />
+    <meta name="theme-color" content="#9945FF" />
+    <link rel="apple-touch-icon" href="https://api.dicebear.com/7.x/bottts-neutral/svg?seed=Uniflex&backgroundColor=9945FF" />
+    <link rel="icon" type="image/svg+xml" href="https://api.dicebear.com/7.x/bottts-neutral/svg?seed=Uniflex&backgroundColor=9945FF" />
+    <script>
+      // Ultimate defensive script to prevent "Cannot set property fetch of #<Window> which has only a getter"
+      (function() {
+        var originalFetch = window.fetch;
+        
+        // 1. Global error suppression (immediate)
+        var errorHandler = function(e) {
+          var msg = e.message || (e.error && e.error.message) || '';
+          if (typeof msg === 'string' && msg.indexOf('fetch') !== -1 && msg.indexOf('getter') !== -1) {
+            e.preventDefault();
+            e.stopPropagation();
+            return true;
+          }
+        };
+        window.addEventListener('error', errorHandler, true);
+        window.onerror = function(msg) {
+          if (typeof msg === 'string' && msg.indexOf('fetch') !== -1 && msg.indexOf('getter') !== -1) {
+            return true;
+          }
+        };
+
+        // 2. Attempt to redefine fetch with a no-op setter
+        function patch(obj) {
+          try {
+            var desc = Object.getOwnPropertyDescriptor(obj, 'fetch');
+            if (!desc || desc.configurable) {
+              Object.defineProperty(obj, 'fetch', {
+                get: function() { return originalFetch; },
+                set: function() { console.warn('Suppressed attempt to overwrite read-only fetch'); },
+                configurable: true,
+                enumerable: true
+              });
+              return true;
+            }
+          } catch (e) {}
+          return false;
+        }
+
+        if (!patch(window)) {
+          patch(Object.getPrototypeOf(window)) || patch(Window.prototype);
+        }
+      })();
+    </script>
+    <script>
+      if ('serviceWorker' in navigator) {
+        window.addEventListener('load', () => {
+          navigator.serviceWorker.register('/sw.js').then(registration => {
+            console.log('SW registered: ', registration);
+          }).catch(registrationError => {
+            console.log('SW registration failed: ', registrationError);
+          });
+        });
+      }
+    </script>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>
+
